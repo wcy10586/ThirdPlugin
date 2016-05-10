@@ -3,14 +3,24 @@ package com.yoloho.lv.httpproject;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
+import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
+import com.yoloho.lv.httpproject.domain.user.UserInfoModel;
+import com.yoloho.lv.httpproject.utils.api.RetrofitAPIManager;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends BaseAppCompatActivity {
+
+    private TextView contentTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +34,50 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        initViews();
+        initData();
+    }
+
+    private void initViews(){
+        contentTxt= (TextView) findViewById(R.id.contentTxt);
+    }
+    private void initData() {
+        getBabyInfoData();
+    }
+
+    private Call babyCall = null;
+
+    private void getBabyInfoData() {
+        babyCall = RetrofitAPIManager.getInstance().getBabyInfoRequestCall();
+        babyCall.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, retrofit2.Response response) {
+                BabyInfoModel result = (BabyInfoModel) response.body();
+                if (null !=result ) {
+                    contentTxt.setText(result.list.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getUserInfoData() {
+        Call<UserInfoModel> call = RetrofitAPIManager.getInstance().getUserInfoRequestCall();
+        call.enqueue(new Callback<UserInfoModel>() {
+            @Override
+            public void onResponse(Call<UserInfoModel> call, Response<UserInfoModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<UserInfoModel> call, Throwable t) {
+
             }
         });
     }
