@@ -1,5 +1,6 @@
 package com.yoloho.lv.httpproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
+import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
 import com.yoloho.lv.httpproject.domain.user.UserInfoModel;
-import com.yoloho.lv.httpproject.utils.api.RetrofitAPIManager;
+import com.yoloho.lv.httpproject.utils.api.apimanager.BabyAPIManager;
+import com.yoloho.lv.httpproject.utils.api.apimanager.UserAPIManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +24,7 @@ import retrofit2.Response;
 public class MainActivity extends BaseAppCompatActivity {
 
     private TextView contentTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +44,10 @@ public class MainActivity extends BaseAppCompatActivity {
         initData();
     }
 
-    private void initViews(){
-        contentTxt= (TextView) findViewById(R.id.contentTxt);
+    private void initViews() {
+        contentTxt = (TextView) findViewById(R.id.contentTxt);
     }
+
     private void initData() {
         getBabyInfoData();
     }
@@ -50,13 +55,13 @@ public class MainActivity extends BaseAppCompatActivity {
     private Call babyCall = null;
 
     private void getBabyInfoData() {
-        babyCall = RetrofitAPIManager.getInstance().getBabyInfoRequestCall();
+        babyCall = BabyAPIManager.getInstance().getBabyInfoRequestCall();
         babyCall.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, retrofit2.Response response) {
                 BabyInfoModel result = (BabyInfoModel) response.body();
-                if (null !=result ) {
-                    contentTxt.setText(result.list.toString());
+                if (null != result) {
+//                    contentTxt.setText(result.list.toString());
                 }
             }
 
@@ -68,7 +73,7 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void getUserInfoData() {
-        Call<UserInfoModel> call = RetrofitAPIManager.getInstance().getUserInfoRequestCall();
+        Call<UserInfoModel> call = UserAPIManager.getInstance().getUserInfoRequestCall();
         call.enqueue(new Callback<UserInfoModel>() {
             @Override
             public void onResponse(Call<UserInfoModel> call, Response<UserInfoModel> response) {
@@ -98,6 +103,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent mIntent = new Intent(MainActivity.this, TopicDetailActivity.class);
+            startActivity(mIntent);
             return true;
         }
 
