@@ -13,12 +13,15 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.yoloho.lv.httpproject.R;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
+import com.yoloho.lv.httpproject.domain.forum.AttentionDataBean;
 import com.yoloho.lv.httpproject.domain.forum.TopicDetailResult;
 import com.yoloho.lv.httpproject.domain.forum.TopicInfo;
 import com.yoloho.lv.httpproject.utils.api.apimanager.ForumAPIManager;
 import com.yoloho.lv.httpproject.utils.download.SaveImageTask;
 
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,8 +38,36 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forum_topicdetailact);
         initPage();
+        parseJson();
     }
 
+
+    private void parseJson() {
+        Map<String, String> params = new HashMap<>();
+        params.put("module", "1");
+        params.put("nowPage", "0");
+        params.put("refreshtime", "0");
+        Call<AttentionDataBean> call = ForumAPIManager.getInstance().getAttentionData(params);
+        call.enqueue(new Callback<AttentionDataBean>() {
+            @Override
+            public void onResponse(Call<AttentionDataBean> call, Response<AttentionDataBean> response) {
+                AttentionDataBean bean = response.body();
+                if (null != bean) {
+                    if (bean.recommendList != null) {
+                        final int size = bean.recommendList.size();
+                        for (int i = 0; i < size; i++) {
+                            resultTxt.setText(bean.recommendList.get(i).toString());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AttentionDataBean> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void initPage() {
         queryBtn = (Button) findViewById(R.id.query_data_btn);
@@ -44,7 +75,7 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
         queryBtn.setOnClickListener(this);
     }
 
-    private String topicInfo ="{\n" +
+    private String topicInfo = "{\n" +
             "        \"id\": 20767132,\n" +
             "        \"title\": \"急急！！请问我这是蚕豆病吗？？？\",\n" +
             "        \"status\": \"1\",\n" +
@@ -108,6 +139,7 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
             "        \"tagList\": [\n" +
             "        ]\n" +
             "    }";
+
     private void getTopicDetailData() {
         Call<TopicDetailResult> dataCall;
         if (null == topicCall) {
@@ -125,7 +157,7 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
                         reader.setLenient(true);
 //                        TopicInfo mTopicInfo = g.fromJson(reader, TopicInfo.class);
                         TopicInfo mTopicInfo = g.fromJson(topicInfo, TopicInfo.class);
-                        result.topicInfo=mTopicInfo;
+                        result.topicInfo = mTopicInfo;
                     } catch (Exception e) {
 
                         e.printStackTrace();
@@ -161,22 +193,22 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
         if (id == R.id.query_data_btn) {
             getTopicDetailData();
             ImageView view = (ImageView) findViewById(R.id.contentBg);
-            Log.e("glide","view="+view.getDrawable());
+            Log.e("glide", "view=" + view.getDrawable());
 //            Glide.with(TopicDetailActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").into(view);
-            String[] pics={"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
+            String[] pics = {"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
                     "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_2.jpg",
-            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_3.jpg",
-            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_4.jpg",
-            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
-            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
-            "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
-            for (int i=0;i<10;i++) {
+                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_3.jpg",
+                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_4.jpg",
+                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
+                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
+                    "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
+            for (int i = 0; i < 10; i++) {
                 Glide.with(TopicDetailActivity.this).load(pics[6]).into(view);
-                Log.e("glide-load","bbbbbbbbbb");
+                Log.e("glide-load", "bbbbbbbbbb");
             }
             SaveImageTask saveImgTask = new SaveImageTask(TopicDetailActivity.this);
             saveImgTask.execute(pics[5]);
-            Log.e("glide","view22222="+view.getDrawable());
+            Log.e("glide", "view22222=" + view.getDrawable());
         }
     }
 

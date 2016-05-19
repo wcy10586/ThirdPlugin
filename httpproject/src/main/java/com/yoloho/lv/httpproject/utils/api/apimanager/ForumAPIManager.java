@@ -2,9 +2,14 @@ package com.yoloho.lv.httpproject.utils.api.apimanager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yoloho.lv.httpproject.domain.deserializer.AttentionDataDeserializer;
+import com.yoloho.lv.httpproject.domain.deserializer.AttentionDeserializer;
+import com.yoloho.lv.httpproject.domain.forum.AttentionDataBean;
+import com.yoloho.lv.httpproject.domain.forum.AttentionInfoBean;
 import com.yoloho.lv.httpproject.domain.forum.TopicDetailResult;
 import com.yoloho.lv.httpproject.utils.api.ClientAPI;
 import com.yoloho.lv.httpproject.utils.api.RetrofitAPIManager;
+import com.yoloho.lv.httpproject.utils.api.netservices.forum.ICommunityPageService;
 import com.yoloho.lv.httpproject.utils.api.netservices.forum.ITopicService;
 
 import java.util.Map;
@@ -63,6 +68,25 @@ public class ForumAPIManager extends RetrofitAPIManager {
                 .build();
         ITopicService topicService = retrofit.create(ITopicService.class);
         Call<TopicDetailResult> call = topicService.loadNetTestData();
+        return call;
+    }
+    public Call<AttentionDataBean> getAttentionData( Map<String, String> params){
+        //we are creating an instance of Gson through the GsonBuilder. Using the registerTypeAdapter() method,
+        // we are registering our deserializer and instructing Gson to use our deserializer when deserializing objects of type 'AttentionDataBean'.
+        // When we request Gson to deserialize an object to the AttentionDataBean class, Gson will use our deserializer.
+        // The following steps describes what happens when we invoke: gson.fromJson(data, AttentionDataBean.class).
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(AttentionInfoBean.class, new AttentionDeserializer());
+        gsonBuilder.registerTypeAdapter(AttentionDataBean.class, new AttentionDataDeserializer());
+        final Gson gson = gsonBuilder.create();
+
+        Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(ClientAPI.getInstance().getTopicEndPoint())
+                .client(genericClient())
+                .build();
+        ICommunityPageService attentionService = retrofit.create(ICommunityPageService.class);
+        Call<AttentionDataBean> call = attentionService.loadAttentionInfo("topic","followTopic",getPublicParams(),params);
         return call;
     }
 }
