@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void initViews() {
         contentTxt = (TextView) findViewById(R.id.contentTxt);
+        Glide.with(MainActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").skipMemoryCache(true).into(330,600);
     }
 
     private void initData() {

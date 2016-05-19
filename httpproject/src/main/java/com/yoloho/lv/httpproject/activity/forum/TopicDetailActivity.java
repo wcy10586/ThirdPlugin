@@ -2,10 +2,13 @@ package com.yoloho.lv.httpproject.activity.forum;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.yoloho.lv.httpproject.R;
@@ -13,6 +16,7 @@ import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 import com.yoloho.lv.httpproject.domain.forum.TopicDetailResult;
 import com.yoloho.lv.httpproject.domain.forum.TopicInfo;
 import com.yoloho.lv.httpproject.utils.api.apimanager.ForumAPIManager;
+import com.yoloho.lv.httpproject.utils.download.SaveImageTask;
 
 import java.io.StringReader;
 
@@ -126,7 +130,7 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
 
                         e.printStackTrace();
                     }
-                    resultTxt.setText("topic_info = " + result.topic_info);
+//                    resultTxt.setText("topic_info = " + result.topic_info);
                 }
             }
 
@@ -156,6 +160,23 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
         final int id = v.getId();
         if (id == R.id.query_data_btn) {
             getTopicDetailData();
+            ImageView view = (ImageView) findViewById(R.id.contentBg);
+            Log.e("glide","view="+view.getDrawable());
+//            Glide.with(TopicDetailActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").into(view);
+            String[] pics={"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
+                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_2.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_3.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_4.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
+            "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
+            for (int i=0;i<10;i++) {
+                Glide.with(TopicDetailActivity.this).load(pics[6]).into(view);
+                Log.e("glide-load","bbbbbbbbbb");
+            }
+            SaveImageTask saveImgTask = new SaveImageTask(TopicDetailActivity.this);
+            saveImgTask.execute(pics[5]);
+            Log.e("glide","view22222="+view.getDrawable());
         }
     }
 
