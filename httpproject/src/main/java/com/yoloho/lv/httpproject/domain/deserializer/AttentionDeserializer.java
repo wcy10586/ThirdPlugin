@@ -26,6 +26,11 @@ import java.util.List;
  * Created by mylinux on 16/05/19.
  */
 public class AttentionDeserializer implements JsonDeserializer<AttentionInfoBean> {
+    public AttentionDeserializer() {
+    }
+
+    public AttentionDeserializer(Class cls) {
+    }
 
     //If we are to deserialise this JSON object, we first need to convert the given JsonElement into a JsonObject as shown next.
     @Override

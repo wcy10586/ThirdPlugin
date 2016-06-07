@@ -1,6 +1,8 @@
 package com.yoloho.lv.httpproject.activity.forum;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +19,10 @@ import com.yoloho.lv.httpproject.domain.forum.AttentionDataBean;
 import com.yoloho.lv.httpproject.domain.forum.TopicDetailResult;
 import com.yoloho.lv.httpproject.domain.forum.TopicInfo;
 import com.yoloho.lv.httpproject.utils.api.apimanager.ForumAPIManager;
-import com.yoloho.lv.httpproject.utils.download.SaveImageTask;
+import com.yoloho.lv.httpproject.utils.imgs.listener.progress.ProgressModelLoader;
 
 import java.io.StringReader;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +39,10 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forum_topicdetailact);
+        setContentView(R.layout.forum_act_topicdetail);
         initPage();
         parseJson();
+        ForumAPIManager.getInstance().getGroupListData();
     }
 
 
@@ -191,9 +195,9 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
     public void onClick(View v) {
         final int id = v.getId();
         if (id == R.id.query_data_btn) {
-            getTopicDetailData();
+//            getTopicDetailData();
             ImageView view = (ImageView) findViewById(R.id.contentBg);
-            Log.e("glide", "view=" + view.getDrawable());
+//            Log.e("glide", "view=" + view.getDrawable());
 //            Glide.with(TopicDetailActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").into(view);
             String[] pics = {"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
                     "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_2.jpg",
@@ -202,13 +206,37 @@ public class TopicDetailActivity extends BaseAppCompatActivity implements View.O
                     "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
                     "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
                     "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
-            for (int i = 0; i < 10; i++) {
-                Glide.with(TopicDetailActivity.this).load(pics[6]).into(view);
-                Log.e("glide-load", "bbbbbbbbbb");
+//            for (int i = 0; i < 10; i++) {
+//                Glide.with(TopicDetailActivity.this).using(new ProgressModelLoader(mainHandler)).load(pics[6]).into(view);
+//                Log.e("glide-load", "bbbbbbbbbb");
+//            }
+            Glide.with(TopicDetailActivity.this).using(new ProgressModelLoader(mainActivityHandler)).load(pics[6]).into(view);
+//            SaveImageTask saveImgTask = new SaveImageTask(TopicDetailActivity.this);
+//            saveImgTask.execute(pics[5]);
+//            Log.e("glide", "view22222=" + view.getDrawable());
+        }
+    }
+    private final MainActivityHandler mainActivityHandler = new MainActivityHandler(this);
+    private static class MainActivityHandler extends Handler {
+        private final WeakReference<TopicDetailActivity> mActivity;
+
+        public MainActivityHandler(TopicDetailActivity activity) {
+            mActivity = new WeakReference<TopicDetailActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            final TopicDetailActivity activity = mActivity.get();
+            if (activity != null) {
+                Log.e("tag_pic", "mainHandler msg.what =" + msg.what);
+                switch (msg.what) {
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
             }
-            SaveImageTask saveImgTask = new SaveImageTask(TopicDetailActivity.this);
-            saveImgTask.execute(pics[5]);
-            Log.e("glide", "view22222=" + view.getDrawable());
         }
     }
 

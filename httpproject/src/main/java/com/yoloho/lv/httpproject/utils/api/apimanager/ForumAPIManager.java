@@ -2,19 +2,25 @@ package com.yoloho.lv.httpproject.utils.api.apimanager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yoloho.lv.httpproject.domain.AD.Advert;
+import com.yoloho.lv.httpproject.domain.HttpResult;
 import com.yoloho.lv.httpproject.domain.deserializer.AttentionDataDeserializer;
 import com.yoloho.lv.httpproject.domain.deserializer.AttentionDeserializer;
+import com.yoloho.lv.httpproject.domain.deserializer.TopicADdeserializer;
 import com.yoloho.lv.httpproject.domain.forum.AttentionDataBean;
 import com.yoloho.lv.httpproject.domain.forum.AttentionInfoBean;
 import com.yoloho.lv.httpproject.domain.forum.TopicDetailResult;
 import com.yoloho.lv.httpproject.utils.api.ClientAPI;
 import com.yoloho.lv.httpproject.utils.api.RetrofitAPIManager;
 import com.yoloho.lv.httpproject.utils.api.netservices.forum.ICommunityPageService;
+import com.yoloho.lv.httpproject.utils.api.netservices.forum.IGroupListService;
 import com.yoloho.lv.httpproject.utils.api.netservices.forum.ITopicService;
 
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -70,7 +76,8 @@ public class ForumAPIManager extends RetrofitAPIManager {
         Call<TopicDetailResult> call = topicService.loadNetTestData();
         return call;
     }
-    public Call<AttentionDataBean> getAttentionData( Map<String, String> params){
+
+    public Call<AttentionDataBean> getAttentionData(Map<String, String> params) {
         //we are creating an instance of Gson through the GsonBuilder. Using the registerTypeAdapter() method,
         // we are registering our deserializer and instructing Gson to use our deserializer when deserializing objects of type 'AttentionDataBean'.
         // When we request Gson to deserialize an object to the AttentionDataBean class, Gson will use our deserializer.
@@ -86,7 +93,37 @@ public class ForumAPIManager extends RetrofitAPIManager {
                 .client(genericClient())
                 .build();
         ICommunityPageService attentionService = retrofit.create(ICommunityPageService.class);
-        Call<AttentionDataBean> call = attentionService.loadAttentionInfo("topic","followTopic",getPublicParams(),params);
+        Call<AttentionDataBean> call = attentionService.loadAttentionInfo("topic", "followTopic", getPublicParams(), params);
         return call;
+    }
+
+    public void getGroupListData() {
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(HttpResult.class, new TopicADdeserializer());
+        final Gson gson = gsonBuilder.create();
+        Retrofit retrofit = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(ClientAPI.getInstance().getADEndPoint())
+                .client(genericClient())
+                .build();
+        IGroupListService groupListService = retrofit.create(IGroupListService.class);
+        Map<String, String> params = getPublicParams();//new HashMap<>();
+        params.put("adspace", "open_hym");
+        params.put("module", "1");
+        Call<HttpResult<Advert>> call = groupListService.loadTopicDetailInfo("ubabyAD", "getAD", params);
+        call.enqueue(new Callback<HttpResult<Advert>>() {
+            @Override
+            public void onResponse(Call<HttpResult<Advert>> call, Response<HttpResult<Advert>> response) {
+                HttpResult<Advert> topicResult = response.body();
+                if(null!=topicResult){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HttpResult<Advert>> call, Throwable t) {
+
+            }
+        });
     }
 }

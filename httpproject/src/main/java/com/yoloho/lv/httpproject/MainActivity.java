@@ -12,8 +12,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
+import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
+import com.yoloho.lv.httpproject.activity.web.PublicWebActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
+import com.yoloho.lv.httpproject.domain.forum.Piclist;
+import com.yoloho.lv.httpproject.domain.forum.TopicInfo;
 import com.yoloho.lv.httpproject.domain.user.UserInfoModel;
 import com.yoloho.lv.httpproject.utils.api.apimanager.BabyAPIManager;
 import com.yoloho.lv.httpproject.utils.api.apimanager.UserAPIManager;
@@ -21,10 +25,23 @@ import com.yoloho.lv.httpproject.utils.api.apimanager.UserAPIManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscriber;
+import rx.functions.Func1;
 
+/**
+ * <ul>
+ * <li>T-MVP：泛型深度解耦下的MVP大瘦身
+ * http://www.jianshu.com/p/b49958e1889d
+ * </li>
+ * </ul>
+ *
+ * @author lv
+ */
 public class MainActivity extends BaseAppCompatActivity {
 
-    private TextView contentTxt;
+    private TextView contentTxt, rxjavaTxtBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +64,81 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void initViews() {
         contentTxt = (TextView) findViewById(R.id.contentTxt);
-        Glide.with(MainActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").skipMemoryCache(true).into(330,600);
+        rxjavaTxtBtn = (TextView) findViewById(R.id.rxjavaTxtBtn);
+        Glide.with(MainActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").skipMemoryCache(true).into(330, 600);
     }
 
     private void initData() {
         getBabyInfoData();
+
+        //
+        Piclist[] piclist = new Piclist[10];
+        for (int i = 0; i < 9; i++) {
+            Piclist item = new Piclist();
+            item.linkUrl = "fragments.pn" + i;
+            piclist[i] = item;
+        }
+
+        final Observable<String> ob = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onNext("bbbbbbbbbbbbbbbbbbb");
+            }
+        });
+        final Observable ob2 = Observable.from(piclist).map(new Func1<Piclist, String>() {
+            @Override
+            public String call(Piclist o) {
+                return o.linkUrl;
+            }
+        });
+        final Observable ob4 = Observable.from(piclist).flatMap(new Func1<Piclist, Observable<TopicInfo>>() {
+            @Override
+            public Observable<TopicInfo> call(Piclist piclist) {
+                return null;
+            }
+        });
+        String[] words = {"aaa", "sss", "ddd"};
+        Observable ob3 = Observable.from(words);
+
+        final Observer<String> observer = new Observer<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                contentTxt.setText(s);
+                ob2.subscribe();
+            }
+        };
+        Subscriber<String> subscriber = new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+                contentTxt.setText(s);
+            }
+        };
+        rxjavaTxtBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ob.subscribe(observer);
+            }
+        });
     }
 
     private Call babyCall = null;
@@ -106,6 +193,14 @@ public class MainActivity extends BaseAppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent mIntent = new Intent(MainActivity.this, TopicDetailActivity.class);
+            startActivity(mIntent);
+            return true;
+        }else if(id==R.id.action_act1){
+            Intent mIntent = new Intent(MainActivity.this, CircleTopicListAct.class);
+            startActivity(mIntent);
+            return true;
+        }else if(id==R.id.action_act2){
+            Intent mIntent = new Intent(MainActivity.this, PublicWebActivity.class);
             startActivity(mIntent);
             return true;
         }

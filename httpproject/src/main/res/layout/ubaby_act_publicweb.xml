@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@color/blue"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/web_topbar_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="0dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/loadurlBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="load url"
+                android:textColor="@color/blue" />
+
+            <ImageView
+                android:id="@+id/left_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/left_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/web_topbar_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+
+            <TextView
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/rightTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:paddingRight="16dp"
+                android:textColor="@color/gray2"
+                android:textSize="16sp" />
+
+            <ProgressBar
+                android:id="@+id/eventIconProgressBar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="7.5dp"
+                android:indeterminateDuration="1000"
+                android:visibility="gone" />
+        </FrameLayout>
+        <!-- android:layout_toRightOf="@id/web_topbar_left_btn"-->
+        <TextView
+            android:id="@+id/webTopBarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="72dp"
+            android:layout_marginRight="72dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="好孕妈--生的漂亮"
+            android:textColor="@color/gray3"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/video_fullView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/blue"
+            android:visibility="gone"></FrameLayout>
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layerType="hardware"
+            android:scrollbars="vertical" />
+    </RelativeLayout>
+
+</LinearLayout>
+

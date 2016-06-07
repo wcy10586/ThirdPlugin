@@ -43,6 +43,8 @@ import okhttp3.OkHttpClient;
  * Protobuf	com.squareup.retrofit:converter-protobuf:2.0.0-beta1
  * Wire	com.squareup.retrofit:converter-wire:2.0.0-beta1
  * Simple XML	com.squareup.retrofit:converter-simplexml:2.0.0-beta1
+ * <p>rxJava是大势所趋 入门还是很简单的 建议还是学习一下吧 入门神贴
+ * http://gank.io/post/560e15be2dca930e00da1083</p>
  */
 public abstract class RetrofitAPIManager {
 

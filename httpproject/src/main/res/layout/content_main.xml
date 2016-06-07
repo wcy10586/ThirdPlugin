@@ -16,6 +16,14 @@
         android:id="@+id/contentTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:text="Hello World!" />
+        android:text="Hello World!"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_below="@+id/contentTxt"
+        android:id="@+id/rxjavaTxtBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="体验订阅"
+        android:textColor="@android:color/black" />
 </RelativeLayout>

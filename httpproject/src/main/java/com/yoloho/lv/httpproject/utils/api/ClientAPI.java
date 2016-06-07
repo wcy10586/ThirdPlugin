@@ -48,6 +48,14 @@ public class ClientAPI {
             return getDomain() + "topic.haoyunma.com";
         }
     }
+
+    public String getADEndPoint() {
+        if (isDebug) {
+            return getDomain() + "ad.test.haoyunma.com";
+        } else {
+            return getDomain() + "ad.haoyunma.com";
+        }
+    }
     private String getDomain() {
         if (isDebug) {
             return "http://";
