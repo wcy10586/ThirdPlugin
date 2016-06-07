@@ -71,7 +71,20 @@
         </activity>
         <activity
             android:name=".activity.forum.TopicDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.forum.CircleTopicListAct"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.web.PublicWebActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.yoloho.lv.httpproject.activity.web.PubWebActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 
