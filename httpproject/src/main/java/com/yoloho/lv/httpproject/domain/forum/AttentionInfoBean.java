@@ -57,6 +57,6 @@ public class AttentionInfoBean {
 
     @Override
     public String toString() {
-        return "[ id = " + id + " nickName = " + nickName + " content = " + content + "]";
+        return "[ id = " + id + " nickName = " + nickName + " title = "+title+" content = " + content +contents+ "]";
     }
 }

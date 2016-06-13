@@ -27,6 +27,10 @@ import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -57,7 +61,8 @@ public class PublicWebActivity extends BaseAppCompatActivity implements View.OnC
         initWebViews();
         String url = "http://whale.test.yoloho.com/index.php/AskDoctor/order_detail?order_id=582&token=104974037-8e8cb8a1a63ba0750a10a4a12af65e49&openId=&partnerId=";
         String url2="https://mall.meiyue.com/h5/hym/product/detail.html?productid=76532&a=ubaby&uid=221666631&token=221666631-95da8695b3885e17bdf54b2816a7f8d4&platform=android&channel=official&ver=19";
-        current_url = url2;
+        String url3 = "http://marketing.test.yoloho.com/index.php/IbuySurvey/index?channel=1";
+        current_url = url3;
         HashMap<String, String> headerMap = new HashMap<>();
         headerMap.put("D-Platform", "android");
         mWebView.loadUrl(current_url, headerMap);
@@ -170,29 +175,30 @@ public class PublicWebActivity extends BaseAppCompatActivity implements View.OnC
             view.loadUrl("javascript:window.local_obj.showSource('<head>'+" +
                     "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 
-//            final String rurl = mWebView.getUrl();
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Document doc = null;
-//                    try {
-////                        doc = Jsoup.connect(rurl).get();
+            final String rurl = mWebView.getUrl();
+            Thread parseHtmlRun = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Document doc = null;
+                    try {
+                        doc = Jsoup.connect(rurl).get();
 //                        Jsoup.connect(rurl).header("User-Agent",
 //                                "Mozilla/5.0 (Windows; U; Windows NT 5.2) Gecko/2008070208 Firefox/3.0.1")
 //                                .header("Accept", "text ml,application/xhtml+xml").header(
 //                                "Accept-Language", "zh-cn,zh;q=0.5").header(
 //                                "Accept-Charset", "GB2312,utf-8;q=0.7,*;q=0.7")
 //                                .get();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                    Elements metas = (Elements) doc.getElementsByTag("meta");
-//                    for (Element meta : metas) {
-//                        if ("HaoyunmaBtnName".equals(meta.attr("name"))) {
-//                        }
-//                    }
-//                }
-//            }).start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Elements metas = (Elements) doc.getElementsByTag("meta");
+                    for (Element meta : metas) {
+                        if ("HaoyunmaBtnName".equals(meta.attr("name"))) {
+                        }
+                    }
+                }
+            });
+            //parseHtmlRun.start()
             String param = getuserinfo().toString().replace("\"", "\\\"");
             // 由于前端在接受到传递set_userinfo数据时候会刷新页面,故此处加以判断
             mWebView.loadUrl("javascript:var str = '" + param + "'; try{if(typeof(eval(set_userinfo))=='function'){set_userinfo(str);}}catch(e){}");

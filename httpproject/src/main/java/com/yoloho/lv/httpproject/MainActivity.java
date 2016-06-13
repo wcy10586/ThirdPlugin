@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
+import com.yoloho.lv.httpproject.activity.master.FriendsAttentionActivity;
+import com.yoloho.lv.httpproject.activity.master.ShowBigImgActivity;
 import com.yoloho.lv.httpproject.activity.web.PublicWebActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
 import com.yoloho.lv.httpproject.domain.forum.Piclist;
@@ -201,6 +203,14 @@ public class MainActivity extends BaseAppCompatActivity {
             return true;
         }else if(id==R.id.action_act2){
             Intent mIntent = new Intent(MainActivity.this, PublicWebActivity.class);
+            startActivity(mIntent);
+            return true;
+        }else if(id==R.id.action_act3){
+            Intent mIntent = new Intent(MainActivity.this, ShowBigImgActivity.class);
+            startActivity(mIntent);
+            return true;
+        }else if(id==R.id.action_act4){
+            Intent mIntent = new Intent(MainActivity.this, FriendsAttentionActivity.class);
             startActivity(mIntent);
             return true;
         }
