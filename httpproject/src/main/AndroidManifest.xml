@@ -76,10 +76,23 @@
             android:name=".activity.forum.CircleTopicListAct"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".activity.forum.AddTopicActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name=".activity.master.FriendsAttentionActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.master.ShowBigImgActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <!---->
+        <activity
+            android:name="com.yoloho.hym.photopicker.PhotoPreviewActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name="com.yoloho.hym.photopicker.PhotoPickerActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.web.PublicWebActivity"

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
+import com.yoloho.lv.httpproject.activity.forum.AddTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.activity.master.FriendsAttentionActivity;
@@ -211,6 +212,10 @@ public class MainActivity extends BaseAppCompatActivity {
             return true;
         }else if(id==R.id.action_act4){
             Intent mIntent = new Intent(MainActivity.this, FriendsAttentionActivity.class);
+            startActivity(mIntent);
+            return true;
+        }else if(id==R.id.action_act5){
+            Intent mIntent = new Intent(MainActivity.this, AddTopicActivity.class);
             startActivity(mIntent);
             return true;
         }

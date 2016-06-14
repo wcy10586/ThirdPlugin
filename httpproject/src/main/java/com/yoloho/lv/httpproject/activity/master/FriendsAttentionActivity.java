@@ -43,9 +43,9 @@ public class FriendsAttentionActivity extends BaseAppCompatActivity implements V
 
     private void parseJson() {
         Map<String, String> params = new HashMap<>();
-        params.put("module", "1");
-        params.put("nowPage", "0");
-        params.put("refreshtime", "0");
+        params.put("module", "10");
+        params.put("nowPage", "130");
+        params.put("refreshtime", "-1000");
         Call<AttentionDataBean> call = ForumAPIManager.getInstance().getAttentionData(params);
         call.enqueue(new Callback<AttentionDataBean>() {
             @Override

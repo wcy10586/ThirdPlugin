@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ThirdPlugin.iml" filepath="$PROJECT_DIR$/ThirdPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/httpproject/httpproject.iml" filepath="$PROJECT_DIR$/httpproject/httpproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photopicker/photopicker.iml" filepath="$PROJECT_DIR$/photopicker/photopicker.iml" />
     </modules>
   </component>
 </project>
