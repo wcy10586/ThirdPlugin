@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//@RuntimePermissions
 public class PhotoPickerActivity extends AppCompatActivity{
 
     public static final String TAG = PhotoPickerActivity.class.getName();
@@ -379,8 +380,8 @@ public class PhotoPickerActivity extends AppCompatActivity{
      * 刷新操作按钮状态
      */
     private void refreshActionStatus(){
-        if(resultList.contains("000000")){
-            resultList.remove("000000");
+        if(resultList.contains("newpicflag")){
+            resultList.remove("newpicflag");
         }
         String text = getString(R.string.done_with_count, resultList.size(), mDesireImageCount);
         menuDoneItem.setTitle(text);

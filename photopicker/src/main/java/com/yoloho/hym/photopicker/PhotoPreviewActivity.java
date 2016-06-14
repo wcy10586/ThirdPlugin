@@ -46,6 +46,9 @@ public class PhotoPreviewActivity extends AppCompatActivity implements PhotoPage
         ArrayList<String> pathArr = getIntent().getStringArrayListExtra(EXTRA_PHOTOS);
         if(pathArr != null){
             paths.addAll(pathArr);
+            if (paths.contains("newpicflag")) {
+                paths.remove("newpicflag");
+            }
         }
 
         currentItem = getIntent().getIntExtra(EXTRA_CURRENT_ITEM, 0);
