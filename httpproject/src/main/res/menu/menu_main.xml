@@ -34,4 +34,9 @@
         android:orderInCategory="150"
         android:title="发表话题"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_act6"
+        android:orderInCategory="160"
+        android:title="小组话题列表"
+        app:showAsAction="never" />
 </menu>

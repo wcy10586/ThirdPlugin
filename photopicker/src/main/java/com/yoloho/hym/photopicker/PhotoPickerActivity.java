@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@RuntimePermissions
+/**
+ *1. 关于6.0权限的处理参考:http://blog.csdn.net/oncealong/article/details/51344844
+ * 2.android permission权限与安全机制解析 http://www.2cto.com/kf/201512/455888.html
+ * */
 public class PhotoPickerActivity extends AppCompatActivity{
 
     public static final String TAG = PhotoPickerActivity.class.getName();

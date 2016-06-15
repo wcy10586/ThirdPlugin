@@ -36,6 +36,8 @@ dependencies {
 //    compile 'com.google.guava:guava:19.0'
 //    compile 'com.google.code.gson:gson:2.6.2'
 
+    //转换器使用ScalarsConverterFactory，接口返回的数据类型为Call<String>/Observable<String>。
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
     compile project(':photopicker')
 
 }

@@ -17,6 +17,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * 1.okhttp网络底层的工具封装处理逻辑
+ * <p/>
+ * <ul>
+ * <li>1.整个app全局最好只初始化一个OkHttpClient实例</li>
+ * <li>2.需要考虑到并发,在单例初始化时候创建了一次,在之后使用中调用getOkHttpClient方法(此方法没有支持并发,可以优化),基本不会创建新的实例了</li>
+ * </ul>
  * 参考链接 http://www.jianshu.com/p/9cebbbd0eeab
  * Created by mylinux on 16/05/10.
  */
@@ -26,6 +31,7 @@ public class OkHttpUtils {
     }
 
     private OkHttpUtils() {
+        getOkHttpClient();
     }
 
     public static final OkHttpUtils getInstance() {

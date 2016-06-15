@@ -69,6 +69,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--论坛相关的activity-->
         <activity
             android:name=".activity.forum.TopicDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -78,7 +79,11 @@
         <activity
             android:name=".activity.forum.AddTopicActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.forum.GroupTopicListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <!--主trunk相关的activity-->
         <activity
             android:name=".activity.master.FriendsAttentionActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -86,7 +91,7 @@
             android:name=".activity.master.ShowBigImgActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <!---->
+        <!--打开图片管理页面-->
         <activity
             android:name="com.yoloho.hym.photopicker.PhotoPreviewActivity"
             android:exported="true"
@@ -96,6 +101,8 @@
             android:name="com.yoloho.hym.photopicker.PhotoPickerActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <!--公用的浏览器页面-->
         <activity
             android:name=".activity.web.PublicWebActivity"
             android:hardwareAccelerated="true"
