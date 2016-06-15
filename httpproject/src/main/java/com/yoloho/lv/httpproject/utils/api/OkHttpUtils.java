@@ -52,26 +52,10 @@ public class OkHttpUtils {
     public OkHttpClient getOkHttpClient() {
         if (null == mOkHttpClient) {
             OkHttpClient client = mOkHttpClientBuilder.cache(getHttpCache())
+//                    .addNetworkInterceptor((Interceptor) new StethoInterceptor())
                     .addInterceptor(new LoggingInterceptor())
                     .addInterceptor(new HttpLoggingInterceptor())
-                    .addInterceptor(new Interceptor() {
-                        //功能是可以拦截http请求进行监控，重写或重试
-                        @Override
-                        public Response intercept(Chain chain) throws IOException {
-                            Request request = chain.request()
-                                    .newBuilder()
-                                    .header("User-Agent", "OkHttp Headers.java")
-                                    .addHeader("Accept", "application/json; q=0.5")
-                                    .addHeader("Accept", "application/vnd.github.v3+json")
-                                    .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                                    .addHeader("Accept-Encoding", "gzip, deflate")
-                                    .addHeader("Accept", "*/*")
-                                    .addHeader("Set-Cookie", "android framework request")
-                                    .build();
-                            return chain.proceed(request);
-                        }
-
-                    })
+                    .addInterceptor(new UserAgentInterceptor("OkHttp Headers.java"))
                     .build();
             mOkHttpClient = client;
         }
@@ -114,21 +98,6 @@ public class OkHttpUtils {
                         .removeHeader("Pragma")
                         .build();
             }
-        }
-    };
-    /**
-     * 日志拦截器
-     */
-    private final static Interceptor LoggingInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            long t1 = System.nanoTime();
-//        Logger.t(TAG).i(String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
-            Response response = chain.proceed(request);
-            long t2 = System.nanoTime();
-//        Logger.t(TAG).i(String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
-            return response;
         }
     };
 

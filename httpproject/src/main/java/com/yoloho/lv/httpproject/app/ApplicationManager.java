@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.SparseArray;
 
+import com.facebook.stetho.Stetho;
+
 import java.lang.ref.WeakReference;
 
 /**
@@ -17,6 +19,11 @@ public class ApplicationManager extends Application {
     public void onCreate() {
         try {
             Class.forName("android.os.AsyncTask");
+            //使用stetho+OkHttp+Chrome调试接口
+            //chrome://inspect/#devices
+            Stetho.initialize(Stetho.newInitializerBuilder(this)
+                    .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                    .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this)).build());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

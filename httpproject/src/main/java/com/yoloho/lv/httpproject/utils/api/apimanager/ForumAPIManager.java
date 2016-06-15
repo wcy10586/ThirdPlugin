@@ -1,6 +1,7 @@
 package com.yoloho.lv.httpproject.utils.api.apimanager;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -151,12 +152,15 @@ public class ForumAPIManager extends RetrofitAPIManager {
     }
 
     public void getGroupListData(final HttpResultCallBack callback, final Map<String, String> params) {
+        final long time1 =System.currentTimeMillis();
         final Retrofit retrofit = getGroupTopicListServiceRetrofit();
         IGroupListService groupListService = retrofit.create(IGroupListService.class);
         Call<String> topicListCall = groupListService.loadGroupTopicList("topic", "groupTopic", getPublicParams(), params);
+        final long time4 =System.currentTimeMillis();
         topicListCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+                final long time2 =System.currentTimeMillis();
                 if (null != callback) {
                     String result = response.body();
                     try {
@@ -177,6 +181,8 @@ public class ForumAPIManager extends RetrofitAPIManager {
                         e.printStackTrace();
                     }
                 }
+                final long time3 =System.currentTimeMillis();
+                Log.e("tag_times","准备时间:"+(time4-time1)+"  请求时间:"+(time2-time1)+"  数据解析时间:"+(time3-time2));
             }
 
             @Override
