@@ -62,7 +62,8 @@ public class PublicWebActivity extends BaseAppCompatActivity implements View.OnC
         String url = "http://whale.test.yoloho.com/index.php/AskDoctor/order_detail?order_id=582&token=104974037-8e8cb8a1a63ba0750a10a4a12af65e49&openId=&partnerId=";
         String url2="https://mall.meiyue.com/h5/hym/product/detail.html?productid=76532&a=ubaby&uid=221666631&token=221666631-95da8695b3885e17bdf54b2816a7f8d4&platform=android&channel=official&ver=19";
         String url3 = "http://marketing.test.yoloho.com/index.php/IbuySurvey/index?channel=1";
-        current_url = url3;
+        String url4="http://dove.test.yoloho.com/dove/index.html?share=1";
+        current_url = url4;
         HashMap<String, String> headerMap = new HashMap<>();
         headerMap.put("D-Platform", "android");
         mWebView.loadUrl(current_url, headerMap);

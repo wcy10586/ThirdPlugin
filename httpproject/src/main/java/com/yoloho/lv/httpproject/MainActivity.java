@@ -14,23 +14,25 @@ import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 import com.yoloho.lv.httpproject.activity.forum.AddTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
+import com.yoloho.lv.httpproject.activity.forum.EditorTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.GroupTopicListActivity;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.activity.master.FriendsAttentionActivity;
 import com.yoloho.lv.httpproject.activity.master.ShowBigImgActivity;
 import com.yoloho.lv.httpproject.activity.web.PublicWebActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
+import com.yoloho.lv.httpproject.domain.forum.AttentionInfoBean;
 import com.yoloho.lv.httpproject.domain.forum.Piclist;
-import com.yoloho.lv.httpproject.domain.forum.TopicInfo;
 import com.yoloho.lv.httpproject.domain.user.UserInfoModel;
 import com.yoloho.lv.httpproject.utils.api.apimanager.BabyAPIManager;
 import com.yoloho.lv.httpproject.utils.api.apimanager.UserAPIManager;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
 import rx.functions.Func1;
 
@@ -73,9 +75,7 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void initData() {
-        getBabyInfoData();
-
-        //
+//        getBabyInfoData();
         Piclist[] piclist = new Piclist[10];
         for (int i = 0; i < 9; i++) {
             Piclist item = new Piclist();
@@ -83,28 +83,25 @@ public class MainActivity extends BaseAppCompatActivity {
             piclist[i] = item;
         }
 
-        final Observable<String> ob = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext("bbbbbbbbbbbbbbbbbbb");
-            }
-        });
-        final Observable ob2 = Observable.from(piclist).map(new Func1<Piclist, String>() {
-            @Override
-            public String call(Piclist o) {
-                return o.linkUrl;
-            }
-        });
-        final Observable ob4 = Observable.from(piclist).flatMap(new Func1<Piclist, Observable<TopicInfo>>() {
-            @Override
-            public Observable<TopicInfo> call(Piclist piclist) {
-                return null;
-            }
-        });
-        String[] words = {"aaa", "sss", "ddd"};
-        Observable ob3 = Observable.from(words);
+        //遍历persionList集合下每一组的图片集合
+        ArrayList<AttentionInfoBean> persionList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            AttentionInfoBean bean = new AttentionInfoBean();
+            Piclist pic = new Piclist();
+            pic.oriPic="http://www.apkbus.com/blog-705730-60454.html?_dsign=6c19f5d8"+"--------"+i;
+            ArrayList<Piclist> imglist = new ArrayList<>();
+            imglist.add(pic);
+            bean.piclist = imglist;
+            persionList.add(bean);
+        }
 
-        final Observer<String> observer = new Observer<String>() {
+
+        Observable.from(persionList).flatMap(new Func1<AttentionInfoBean, Observable<Piclist>>() {
+            @Override
+            public Observable<Piclist> call(AttentionInfoBean attentionInfoBean) {
+                return Observable.from(attentionInfoBean.piclist);
+            }
+        }).subscribe(new Subscriber<Piclist>() {
             @Override
             public void onCompleted() {
 
@@ -116,31 +113,10 @@ public class MainActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void onNext(String s) {
-                contentTxt.setText(s);
-                ob2.subscribe();
-            }
-        };
-        Subscriber<String> subscriber = new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String s) {
-                contentTxt.setText(s);
-            }
-        };
-        rxjavaTxtBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ob.subscribe(observer);
+            public void onNext(Piclist piclist) {
+                //处理
+                String str= contentTxt.getText()+ "/n" + piclist.oriPic;
+                contentTxt.setText(str);
             }
         });
     }
@@ -199,28 +175,32 @@ public class MainActivity extends BaseAppCompatActivity {
             Intent mIntent = new Intent(MainActivity.this, TopicDetailActivity.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act1){
+        } else if (id == R.id.action_act1) {
             Intent mIntent = new Intent(MainActivity.this, CircleTopicListAct.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act2){
+        } else if (id == R.id.action_act2) {
             Intent mIntent = new Intent(MainActivity.this, PublicWebActivity.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act3){
+        } else if (id == R.id.action_act3) {
             Intent mIntent = new Intent(MainActivity.this, ShowBigImgActivity.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act4){
+        } else if (id == R.id.action_act4) {
             Intent mIntent = new Intent(MainActivity.this, FriendsAttentionActivity.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act5){
+        } else if (id == R.id.action_act5) {
             Intent mIntent = new Intent(MainActivity.this, AddTopicActivity.class);
             startActivity(mIntent);
             return true;
-        }else if(id==R.id.action_act6){
+        } else if (id == R.id.action_act6) {
             Intent mIntent = new Intent(MainActivity.this, GroupTopicListActivity.class);
+            startActivity(mIntent);
+            return true;
+        }else if (id == R.id.action_act7) {
+            Intent mIntent = new Intent(MainActivity.this, EditorTopicActivity.class);
             startActivity(mIntent);
             return true;
         }

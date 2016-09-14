@@ -39,4 +39,9 @@
         android:orderInCategory="160"
         android:title="小组话题列表"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_act7"
+        android:orderInCategory="160"
+        android:title="编辑器"
+        app:showAsAction="never" />
 </menu>
