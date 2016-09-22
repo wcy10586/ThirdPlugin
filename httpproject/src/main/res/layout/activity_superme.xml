@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <!--fitsSystemWindows实现沉浸式效果-->
+    <!-- AppBarLayout，作为CoordinatorLayout的子类 -->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="256dp"
+        android:fitsSystemWindows="true">
+
+        <!--
+       CollapsingToolbarLayout的2个重要属性:
+            layout_scrollFlags=”scroll|exitUntilCollapsed”：向上滚动时收缩View，
+            但可以固定Toolbar，使Toolbar一直在上面
+            contentScrim： 当CollapsingToolbarLayout折叠后背景颜色-->
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <!-- CollapsingToolbarLayout子view，ImageView属性
+                layout_collapseMode=”parallax”：使ImageView跟随滚动的时候具有视差效果
+                layout_collapseParallaxMultiplier=”0.1”：视差因子，设置视差滚动因子，值为：0~1-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/me_icon_fraction_headbg"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.1" />
+
+            <!--为了使Toolbar具有折叠的效果，Toolbar外面还要放一个CollapsingToolbarLayout布局容器，
+            CollapsingToolbarLayout里面放了一个ImageView和一个Toolbar，
+            并把这个CollapsingToolbarLayout放到AppBarLayout中作为一个整体。-->
+
+            <!-- CollapsingToolbarLayout子view，Toolbar属性
+                layout_collapseMode=”pin”：当CollapsingToolbarLayout完全收缩后，
+                Toolbar还可以保留在屏幕上。-->
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="bottom"
+                android:title="这是我的地盘"
+                android:titleTextColor="@color/gray3"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:text="" />
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:layout_scrollFlags="scroll"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/tabselect"
+                app:tabSelectedTextColor="@color/tabselect"
+                app:tabTextColor="@color/black" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

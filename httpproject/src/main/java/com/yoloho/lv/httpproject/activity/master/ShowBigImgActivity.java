@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.yoloho.lv.httpproject.R;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
-import com.yoloho.lv.httpproject.utils.imgs.listener.progress.ProgressModelLoader;
+import com.yoloho.lv.httpproject.utils.imgs.GlideLoadConfig;
+import com.yoloho.lv.httpproject.utils.imgs.GlideUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -34,6 +34,7 @@ public class ShowBigImgActivity extends BaseAppCompatActivity implements View.On
         queryBtn = (Button) findViewById(R.id.query_data_btn);
         resultTxt = (TextView) findViewById(R.id.display_data_txt);
         queryBtn.setOnClickListener(this);
+        findViewById(R.id.query_data_btn2).setOnClickListener(this);
     }
 
     @Override
@@ -43,24 +44,34 @@ public class ShowBigImgActivity extends BaseAppCompatActivity implements View.On
             ImageView view = (ImageView) findViewById(R.id.contentBg);
 //            Log.e("glide", "view=" + view.getDrawable());
 //            Glide.with(TopicDetailActivity.this).load("http://inthecheesefactory.com/uploads/source/nestedfragment/fragments.png").into(view);
-            String[] pics = {"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
-                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_2.jpg",
-                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_3.jpg",
-                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_4.jpg",
-                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
-                    "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
-                    "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
 //            for (int i = 0; i < 10; i++) {
 //                Glide.with(TopicDetailActivity.this).using(new ProgressModelLoader(mainHandler)).load(pics[6]).into(view);
 //                Log.e("glide-load", "bbbbbbbbbb");
 //            }
-            Glide.with(ShowBigImgActivity.this).using(new ProgressModelLoader(mainActivityHandler)).load(pics[6]).into(view);
+//            Glide.with(ShowBigImgActivity.this).using(new ProgressModelLoader(mainActivityHandler)).load(pics[6]).into(view);
 //            SaveImageTask saveImgTask = new SaveImageTask(TopicDetailActivity.this);
 //            saveImgTask.execute(pics[5]);
 //            Log.e("glide", "view22222=" + view.getDrawable());
+            String gif = "http://image24.360doc.com/DownloadImg/2011/03/0513/9707070_3.gif";
+            GlideLoadConfig config2 = GlideLoadConfig.parseBuilder(GlideUtils.defConfig).setAsGif(true).
+                    setSkipMemoryCache(true).
+                    setDiskCacheStrategy(GlideLoadConfig.DiskCache.NONE).
+                    build();
+            GlideUtils.loadGif(view, gif, config2, null);
+        } else if (id == R.id.query_data_btn2) {
+            ImageView view = (ImageView) findViewById(R.id.contentBg);
+            int index = (int) (Math.random() * 6);
+            GlideUtils.loadStringRes(view, pics[index], GlideUtils.defConfig, null);
         }
     }
 
+    String[] pics = {"http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_1.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_2.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_3.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_4.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_5.jpg",
+            "http://image96.360doc.com/DownloadImg/2016/04/2201/70258332_6.jpg",
+            "http://img.haoyunma.com/offline/topic/TOPIC_IMAGE_1462933697321.jpeg@1080w_1590h"};
     private final MainActivityHandler mainActivityHandler = new MainActivityHandler(this);
 
     private static class MainActivityHandler extends Handler {

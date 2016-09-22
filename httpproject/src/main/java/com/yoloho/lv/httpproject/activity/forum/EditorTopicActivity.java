@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yoloho.hym.photopicker.PhotoPickerActivity;
+import com.yoloho.hym.photopicker.SelectModel;
+import com.yoloho.hym.photopicker.intent.PhotoPickerIntent;
 import com.yoloho.lv.httpproject.R;
 import com.yoloho.lv.httpproject.activity.BaseActivity;
 import com.yoloho.lv.httpproject.views.editor.SEditorData;
@@ -21,13 +23,14 @@ import com.yoloho.lv.httpproject.views.editor.SortRichEditor;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by mylinux on 16/09/12.
  */
-public class EditorTopicActivity extends BaseActivity implements View.OnClickListener{
+public class EditorTopicActivity extends BaseActivity implements View.OnClickListener {
     public static final int REQUEST_CODE_PICK_IMAGE = 1023;
     public static final int REQUEST_CODE_CAPTURE_CAMEIA = 1022;
 
@@ -111,8 +114,12 @@ public class EditorTopicActivity extends BaseActivity implements View.OnClickLis
 //            editor.addImageArray(photoPaths);
 //        } else
 //
-     if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
+        if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
             editor.addImage(mCurrentPhotoFile.getAbsolutePath());
+        } else if (requestCode == REQUEST_CAMERA_CODE) {
+            ArrayList<String> list = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
+            Log.d("tag_selected", "list: " + "list = [" + list.size());
+            editor.addImageList(list);
         }
     }
 
@@ -127,7 +134,12 @@ public class EditorTopicActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.iv_gallery:
-                startActivityForResult(new Intent(this, PhotoPickerActivity.class), REQUEST_CODE_PICK_IMAGE);
+                PhotoPickerIntent intent = new PhotoPickerIntent(EditorTopicActivity.this);
+                intent.setSelectModel(SelectModel.MULTI);
+                intent.setShowCarema(true); // 是否显示拍照
+                intent.setMaxTotal(6); // 最多选择照片数量，默认为6
+                intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
+                startActivityForResult(intent, REQUEST_CAMERA_CODE);
                 break;
             case R.id.iv_camera:
                 openCamera();
@@ -139,4 +151,8 @@ public class EditorTopicActivity extends BaseActivity implements View.OnClickLis
                 break;
         }
     }
+
+    private ArrayList<String> imagePaths = new ArrayList<>();
+    public static final int REQUEST_CAMERA_CODE = 0x010;
+    public static final int REQUEST_PREVIEW_CODE = 0x020;
 }

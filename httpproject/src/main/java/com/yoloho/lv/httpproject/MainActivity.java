@@ -16,6 +16,7 @@ import com.yoloho.lv.httpproject.activity.forum.AddTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
 import com.yoloho.lv.httpproject.activity.forum.EditorTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.GroupTopicListActivity;
+import com.yoloho.lv.httpproject.activity.forum.SuperMeActivity;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.activity.master.FriendsAttentionActivity;
 import com.yoloho.lv.httpproject.activity.master.ShowBigImgActivity;
@@ -26,7 +27,9 @@ import com.yoloho.lv.httpproject.domain.forum.Piclist;
 import com.yoloho.lv.httpproject.domain.user.UserInfoModel;
 import com.yoloho.lv.httpproject.utils.api.apimanager.BabyAPIManager;
 import com.yoloho.lv.httpproject.utils.api.apimanager.UserAPIManager;
+import com.yoloho.lv.httpproject.utils.imgs.GlideUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -34,7 +37,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * <ul>
@@ -88,7 +94,7 @@ public class MainActivity extends BaseAppCompatActivity {
         for (int i = 0; i < 6; i++) {
             AttentionInfoBean bean = new AttentionInfoBean();
             Piclist pic = new Piclist();
-            pic.oriPic="http://www.apkbus.com/blog-705730-60454.html?_dsign=6c19f5d8"+"--------"+i;
+            pic.oriPic = "http://www.apkbus.com/blog-705730-60454.html?_dsign=6c19f5d8" + "--------" + i;
             ArrayList<Piclist> imglist = new ArrayList<>();
             imglist.add(pic);
             bean.piclist = imglist;
@@ -115,10 +121,30 @@ public class MainActivity extends BaseAppCompatActivity {
             @Override
             public void onNext(Piclist piclist) {
                 //处理
-                String str= contentTxt.getText()+ "/n" + piclist.oriPic;
+                String str = contentTxt.getText() + "/n" + piclist.oriPic;
                 contentTxt.setText(str);
             }
         });
+        Observable.just("getDiskCacheSize")
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, String>() {
+                    @Override
+                    public String call(String s) {
+                        long size = GlideUtils.getDiskCacheSize(MainActivity.this);
+                        File file= Glide.getPhotoCacheDir(MainActivity.this);
+                        if(null!=file){
+                            return file.getPath()+" size = "+(size/(1024*1024f))+"M";
+                        }
+                        return size+"";
+                    }
+                }).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        String str= contentTxt.getText().toString();
+                        contentTxt.setText(str+"/n 缓存目录的大小:"+s);
+                    }
+                });
     }
 
     private Call babyCall = null;
@@ -199,8 +225,12 @@ public class MainActivity extends BaseAppCompatActivity {
             Intent mIntent = new Intent(MainActivity.this, GroupTopicListActivity.class);
             startActivity(mIntent);
             return true;
-        }else if (id == R.id.action_act7) {
+        } else if (id == R.id.action_act7) {
             Intent mIntent = new Intent(MainActivity.this, EditorTopicActivity.class);
+            startActivity(mIntent);
+            return true;
+        } else if (id == R.id.action_act8) {
+            Intent mIntent = new Intent(MainActivity.this, SuperMeActivity.class);
             startActivity(mIntent);
             return true;
         }

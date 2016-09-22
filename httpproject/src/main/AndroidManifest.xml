@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.yoloho.lv.httpproject"
     android:versionCode="1"
     android:versionName="1.0">
@@ -122,7 +123,16 @@
             android:name=".activity.forum.EditorTopicActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
+        <activity
+            android:name=".activity.forum.SuperMeActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule" tools:node="remove"/>
+        <meta-data
+            android:name="com.yoloho.lv.httpproject.utils.imgs.UbabyGlideModule"
+            android:value="GlideModule" tools:node="remove"/>
     </application>
 
 </manifest>

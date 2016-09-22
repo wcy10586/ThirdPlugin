@@ -44,4 +44,9 @@
         android:orderInCategory="160"
         android:title="编辑器"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_act8"
+        android:orderInCategory="160"
+        android:title="AppBarLayout"
+        app:showAsAction="never" />
 </menu>

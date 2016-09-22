@@ -71,7 +71,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
     /**
      * 出发ScrollView滚动时，顶部与底部的偏移量
      */
-    private final int SCROLL_OFFSET = (int)(SIZE_REDUCE_VIEW * .3);
+    private final int SCROLL_OFFSET = (int) (SIZE_REDUCE_VIEW * .3);
 
     /**
      * 默认Marging
@@ -109,21 +109,21 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
      * 所以这里指定为所有子view的容器为parentLayout(LinearLayout)
      * 即：布局层次为：
      * ScrollView{
-     *      parentLayout{
-     *          titleLayout{
-     *              EditText,
-     *              TExtView
-     *          },
-     *
-     *          LineView,
-     *
-     *         containerLayout{
-     *              child1,
-     *              child2,
-     *              child3,
-     *              ...
-     *          }
-     *      }
+     * parentLayout{
+     * titleLayout{
+     * EditText,
+     * TExtView
+     * },
+     * <p/>
+     * LineView,
+     * <p/>
+     * containerLayout{
+     * child1,
+     * child2,
+     * child3,
+     * ...
+     * }
+     * }
      * }
      */
     private LinearLayout parentLayout;
@@ -311,7 +311,8 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
         etTitle.setTextSize(14);
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -320,7 +321,8 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         LinearLayout.LayoutParams editTitleLayoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -434,10 +436,11 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 创建图片文本内容容器
+     *
      * @return
      */
-        @NonNull
-        private LinearLayout createContaniner() {
+    @NonNull
+    private LinearLayout createContaniner() {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         final LinearLayout containerLayout = new LinearLayout(getContext()) {
             @Override
@@ -461,7 +464,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
                             } else if (currRawY < containerTopVal) { // 内容下滚动
                                 scrollVector = -DEFAULT_SCROLL_SPEED;
                                 startOverEdgeAutoScroll();
-                            }else {
+                            } else {
                                 stopOverEdgeAutoScroll();
                             }
                         }
@@ -495,6 +498,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 获取排序之前子View的LayoutParams用于还原子View大小
+     *
      * @param child
      * @return
      */
@@ -737,8 +741,8 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
     }
 
     /**
-     *
      * 生成一个“将来用于编辑文字的图片”ImageView
+     *
      * @return ImageView
      */
     @NonNull
@@ -791,7 +795,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lp.bottomMargin = DEFAULT_MARGING;
         lp.leftMargin = DEFAULT_MARGING;
-        lp.rightMargin= DEFAULT_MARGING;
+        lp.rightMargin = DEFAULT_MARGING;
         editText.setLayoutParams(lp);
 
         return editText;
@@ -832,7 +836,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
                 LayoutParams.MATCH_PARENT, DEFAULT_IMAGE_HEIGHT);
         lp.bottomMargin = DEFAULT_MARGING;
         lp.leftMargin = DEFAULT_MARGING;
-        lp.rightMargin= DEFAULT_MARGING;
+        lp.rightMargin = DEFAULT_MARGING;
         layout.setLayoutParams(lp);
 
         return layout;
@@ -894,6 +898,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 批量插入一组图片
+     *
      * @param imagePathList
      */
     private void insertBatchImage(List<String> imagePathList) {
@@ -906,6 +911,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 隐藏或者显示软键盘
+     *
      * @param isShow true:显示，false:隐藏
      */
     public void processSoftKeyBoard(boolean isShow) {
@@ -919,6 +925,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 在指定位置添加一个“将来用于编辑文字的图片”
+     *
      * @param index
      */
     private void insertEditTextImageView(int index) {
@@ -1074,16 +1081,19 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 根据图片绝对路径数组批量添加一组图片
+     *
      * @param imagePaths
      */
     @Override
     public void addImageArray(String[] imagePaths) {
-        if (imagePaths == null) return;
+        if (imagePaths == null)
+            return;
         addImageList(Arrays.asList(imagePaths));
     }
 
     /**
      * 根据图片绝对路径集合批量添加一组图片
+     *
      * @param imageList
      */
     @Override
@@ -1140,6 +1150,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 获取当前编辑器中图片数量
+     *
      * @return
      */
     @Override
@@ -1157,6 +1168,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 编辑器内容是否为空
+     *
      * @return
      */
     @Override
@@ -1185,6 +1197,7 @@ public class SortRichEditor extends ScrollView implements SEditorDataI {
 
     /**
      * 获取标题
+     *
      * @return
      */
     @Override
