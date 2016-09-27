@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yoloho.annotation.Router;
 import com.yoloho.lv.httpproject.R;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 import com.yoloho.lv.httpproject.utils.imgs.GlideLoadConfig;
@@ -22,6 +23,7 @@ import java.lang.ref.WeakReference;
  * 1.glide图库的联系使用
  * Created by mylinux on 16/06/13.
  */
+@Router("showbigimgact")
 public class ShowBigImgActivity extends BaseAppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

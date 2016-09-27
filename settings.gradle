@@ -1,1 +1,1 @@
-include ':httpproject', ':photopicker'
+include ':httpproject', ':photopicker', ':compiler', ':annotation', ':activityrouters'

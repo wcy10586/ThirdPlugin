@@ -127,12 +127,40 @@
             android:name=".activity.forum.SuperMeActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <meta-data
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-            android:value="GlideModule" tools:node="remove"/>
+            android:value="GlideModule"
+            tools:node="remove" />
         <meta-data
             android:name="com.yoloho.lv.httpproject.utils.imgs.UbabyGlideModule"
-            android:value="GlideModule" tools:node="remove"/>
+            android:value="GlideModule"
+            tools:node="remove" />
+
+        <activity
+            android:name="com.yoloho.lv.httpproject.actrouter.RouterActivity"
+            android:theme="@android:style/Theme.NoDisplay">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="hym" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="hym.com"
+                    android:scheme="http" />
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

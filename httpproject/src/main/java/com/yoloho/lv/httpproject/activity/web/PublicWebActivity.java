@@ -22,6 +22,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.yoloho.annotation.Router;
 import com.yoloho.lv.httpproject.R;
 import com.yoloho.lv.httpproject.activity.BaseAppCompatActivity;
 
@@ -41,6 +42,7 @@ import java.util.HashMap;
 /**
  * Created by mylinux on 16/05/25.
  */
+@Router("publicwebact")
 public class PublicWebActivity extends BaseAppCompatActivity implements View.OnClickListener {
     private WebView mWebView;
     private View loadurlBtn;
