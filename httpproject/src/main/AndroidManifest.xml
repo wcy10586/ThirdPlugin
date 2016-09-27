@@ -138,7 +138,7 @@
             tools:node="remove" />
 
         <activity
-            android:name="com.yoloho.lv.httpproject.actrouter.RouterActivity"
+            android:name="com.yoloho.actrouters.RouterActivity"
             android:theme="@android:style/Theme.NoDisplay">
 
             <intent-filter>

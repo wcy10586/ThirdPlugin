@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ThirdPlugin.iml" filepath="$PROJECT_DIR$/ThirdPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/activityrouters/activityrouters.iml" filepath="$PROJECT_DIR$/activityrouters/activityrouters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/annotation/annotation.iml" filepath="$PROJECT_DIR$/annotation/annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/compiler/compiler.iml" filepath="$PROJECT_DIR$/compiler/compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/httpproject/httpproject.iml" filepath="$PROJECT_DIR$/httpproject/httpproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/photopicker/photopicker.iml" filepath="$PROJECT_DIR$/photopicker/photopicker.iml" />
     </modules>

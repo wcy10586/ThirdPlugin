@@ -13,6 +13,17 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * 1.通过url格式支持打开activity
+ * 2.应用内部调用Routers.open(...)
+ * 3.支持回调,需要在程序入口:Application implements RouterCallbackProvider
+ * 4.支持参数定义类型:@Router(value = "main/:uid", intParams = "uid")
+ * 支持的类型有int,long double,byte,float,char,boolean,默认为string
+ * 5.支持http(s)协议 :http://haoyunma.com/main
+ * 6.支持配置多个地址:@Router({"main","home"})
+ * 7.参数传递 haoyunma://main?uid=1&nick=q
+ * 8.在path中配置多级参数:@Router("user/:userId/:topicId/:commentId")
+ * 或者 @Router("user/:userId/topic/:topicId/comment/:commentId")
+ * 使用时候:url="haoyunma://user/1/1000/999";
  * Created by lv
  */
 public class ActRouters {

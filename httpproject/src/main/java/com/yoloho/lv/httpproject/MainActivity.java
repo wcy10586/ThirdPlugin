@@ -207,12 +207,12 @@ public class MainActivity extends BaseAppCompatActivity {
         } else if (id == R.id.action_act2) {
            /* Intent mIntent = new Intent(MainActivity.this, PublicWebActivity.class);
             startActivity(mIntent);*/
-            ActRouters.open(MainActivity.this, "haoyunma://publicwebact");
+            ActRouters.open(MainActivity.this, "hym://publicwebact");
             return true;
         } else if (id == R.id.action_act3) {
 //            Intent mIntent = new Intent(MainActivity.this, ShowBigImgActivity.class);
 //            startActivity(mIntent);
-            ActRouters.open(MainActivity.this, "haoyunma://showbigimgact");
+            ActRouters.open(MainActivity.this, "hym://showbigimgact");
             return true;
         } else if (id == R.id.action_act4) {
             Intent mIntent = new Intent(MainActivity.this, FriendsAttentionActivity.class);
