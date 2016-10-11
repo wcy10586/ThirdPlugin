@@ -1,7 +1,6 @@
 package com.yoloho.lv.httpproject;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +17,7 @@ import com.yoloho.lv.httpproject.activity.forum.AddTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.CircleTopicListAct;
 import com.yoloho.lv.httpproject.activity.forum.EditorTopicActivity;
 import com.yoloho.lv.httpproject.activity.forum.GroupTopicListActivity;
+import com.yoloho.lv.httpproject.activity.forum.SuperMeActivity;
 import com.yoloho.lv.httpproject.activity.forum.TopicDetailActivity;
 import com.yoloho.lv.httpproject.activity.master.FriendsAttentionActivity;
 import com.yoloho.lv.httpproject.domain.baby.BabyInfoModel;
@@ -231,11 +231,11 @@ public class MainActivity extends BaseAppCompatActivity {
             startActivity(mIntent);
             return true;
         } else if (id == R.id.action_act8) {
-//            Intent mIntent = new Intent(MainActivity.this, SuperMeActivity.class);
-//            startActivity(mIntent);
-            Uri uri = Uri.parse("haoyunma://homepage");
-            Intent it = new Intent(Intent.ACTION_VIEW,uri);
-            startActivity(it);
+            Intent mIntent = new Intent(MainActivity.this, SuperMeActivity.class);
+            startActivity(mIntent);
+//            Uri uri = Uri.parse("haoyunma://homepage");
+//            Intent it = new Intent(Intent.ACTION_VIEW,uri);
+//            startActivity(it);
             return true;
         }
 
